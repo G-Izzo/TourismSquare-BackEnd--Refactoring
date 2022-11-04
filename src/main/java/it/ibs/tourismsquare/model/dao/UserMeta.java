@@ -1,4 +1,4 @@
-package it.ibs.tourismsquare.model;
+package it.ibs.tourismsquare.model.dao;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -9,16 +9,17 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-public class EventFavourite {
+public class UserMeta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long eventoId;
+    private String token;
+    private String pushToken;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "fk_user_id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private User userId;
 }
