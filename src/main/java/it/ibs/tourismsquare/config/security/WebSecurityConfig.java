@@ -4,10 +4,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 
@@ -19,7 +15,7 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		//.cors().and().csrf().disable()
+		/*//.cors().and().csrf().disable()
 		http
 		.csrf(
                 crf -> crf.disable()
@@ -32,20 +28,17 @@ public class WebSecurityConfig {
 				.loginPage(URL+"/login")
 				.permitAll()
 			)
-		.logout((logout) -> logout.logoutUrl(URL+"/").permitAll());
+		.logout((logout) -> logout.logoutUrl(URL+"/").permitAll());*/
 
+		http.csrf().disable()
+		.authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
+		.antMatchers("/hellouser").hasAnyRole("USER","ADMIN")
+		.antMatchers("/authenticate").permitAll().anyRequest().authenticated()
+		.and().httpBasic();
+		
 		return http.build();
 	}
+	
+	
 
-	@Bean
-	public UserDetailsService userDetailsService() {
-		UserDetails user =
-			 User.withDefaultPasswordEncoder()
-				.username("user")
-				.password("password")
-				.roles("USER")
-				.build();
-
-		return new InMemoryUserDetailsManager(user);
-	}
 }

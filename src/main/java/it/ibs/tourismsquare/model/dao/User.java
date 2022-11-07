@@ -26,10 +26,10 @@ public class User {
 
     @NotNull private final String name;
     @NotNull private final String surname;
-    @NotNull private final String email;
     @NotNull private final String city;
-    private final Date createdAt;
+    @NotNull private final String email;
     @NotNull private final String password;
+    @NotNull private final Date  createdAt;
 
     @OneToMany(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Reminder> reminders;
