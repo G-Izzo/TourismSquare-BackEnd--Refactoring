@@ -8,7 +8,7 @@ import it.ibs.tourismsquare.model.dao.User;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 	
-	boolean findByEmailAndPassword(@NotNull String email, @NotNull String password);
+	User findByEmailAndPassword(@NotNull String email, @NotNull String password);
 
-	boolean findByEmail(@NotNull String email);
+	User findByEmail(@NotNull String email);
 }

@@ -29,5 +29,10 @@ public class UserMeta {
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
-    private User userId;
+    private  User userId;
+
+	public UserMeta(@NotNull String token, User userId) {
+		this.token = token;
+		this.userId = userId;
+	}        
 }

@@ -15,30 +15,25 @@ public class WebSecurityConfig {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		/*//.cors().and().csrf().disable()
+		//.cors().and().csrf().disable()
 		http
 		.csrf(
                 crf -> crf.disable()
         )
 		.authorizeHttpRequests((requests) -> requests
-				.antMatchers("/", "/api/user/**").permitAll()
+				.antMatchers("/api/auth/**").permitAll()
 				.anyRequest().authenticated()
 			)
 		.formLogin((form) -> form
 				.loginPage(URL+"/login")
 				.permitAll()
 			)
-		.logout((logout) -> logout.logoutUrl(URL+"/").permitAll());*/
+		.logout(
+				(logout) -> logout.logoutUrl(URL+"/").permitAll()
+			);
 
-		http.csrf().disable()
-		.authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
-		.antMatchers("/hellouser").hasAnyRole("USER","ADMIN")
-		.antMatchers("/authenticate").permitAll().anyRequest().authenticated()
-		.and().httpBasic();
-		
 		return http.build();
 	}
-	
-	
 
+	
 }
